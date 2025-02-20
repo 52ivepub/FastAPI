@@ -8,14 +8,15 @@ from alembic import context
 
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
-from app.datebase import Base, DATEBASE_URL
+from app.config import settings
+from app.datebase import Base
 from app.hotels.models import Hotels
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
 
-config.set_main_option('sqlalchemy.url', f"{DATEBASE_URL}?async_fallback=True")
+config.set_main_option('sqlalchemy.url', f"{settings.DATEBASE_URL}?async_fallback=True")
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
