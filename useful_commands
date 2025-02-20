@@ -1,3 +1,11 @@
 fastapi dev main.py  - # запуск
 
 uvicorn app.main:app - # запуск
+
+alembic init migrations - # инициализация алембика
+
+alembic revision --autogenerate -m "Initial migration" - # миграция в БД
+
+alembic upgrade head - #обновить миграции
+
+alembic downgrade -1 - # откатиться на 1 миграцию назад
