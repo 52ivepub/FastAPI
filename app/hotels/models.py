@@ -1,6 +1,3 @@
-from ctypes.wintypes import SERVICE_STATUS_HANDLE
-from os import name
-
 from sqlalchemy import JSON, Column, Integer, String
 from app.datebase import Base
 
