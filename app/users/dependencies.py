@@ -6,13 +6,15 @@ import re
 from fastapi import Depends, HTTPException, Request
 from jose  import jwt, JWTError
 
+from app.exception import TokenAbsentExtension, TokenExpiredException, UserIdNotPresentException
 from app.users.dao import UsersDAO
+from app.users.models import Users
 
 
 def get_token(request: Request):
     token = request.cookies.get("booking_access_token")
     if not token:
-        raise HTTPException(status_code=401)
+        raise TokenAbsentExtension
     return token
 
 
@@ -26,12 +28,18 @@ async def get_current_user(token: str = Depends(get_token)):
         raise HTTPException(status_code=401)
     expire: str = payload.get("exp")
     if (not expire) or (int(expire) < datetime.utcnow().timestamp()):
-        raise HTTPException(status_code=401)
+        raise TokenExpiredException
     user_id: str = payload.get("sub")
     if not user_id:
-        raise HTTPException(status_code=401)
+        raise UserIdNotPresentException
     user = await UsersDAO.find_by_id(int(user_id))
     if not user:
-        raise HTTPException(status_code=401)
+        raise UserIdNotPresentException
     
     return user
+
+async def get_current_admin_user(current_user: Users = Depends(get_current_user)):
+
+    # if current_user.role != "admin":
+    #     raise HTTPException(status_code=401)
+    return current_user
