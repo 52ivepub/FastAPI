@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import  HTTPException,  status
 
 
 
@@ -10,8 +10,8 @@ UserAlreadyExistsException = HTTPException(
 
 
 IncorrectEmailOrPassword = HTTPException(
-    status = status.HTTP_401_UNAUTHORIZED,
-    datail="Неверная почта или пароль",
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Неверная почта или пароль",
 )
 
 TokenExpiredException = HTTPException(
@@ -21,7 +21,7 @@ TokenExpiredException = HTTPException(
 
 TokenAbsentExtension = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,
-    datail="Токен отсутствует",
+    detail="Токен отсутствует",
 )
 
 

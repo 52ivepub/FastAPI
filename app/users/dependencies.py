@@ -3,10 +3,10 @@ import decimal
 from app.config import  settings
 
 import re
-from fastapi import Depends, HTTPException, Request
+from fastapi import Depends, Request
 from jose  import jwt, JWTError
 
-from app.exception import TokenAbsentExtension, TokenExpiredException, UserIdNotPresentException
+from app.exception import IncorrectTokenFormatException, TokenAbsentExtension, TokenExpiredException, UserIdNotPresentException
 from app.users.dao import UsersDAO
 from app.users.models import Users
 
@@ -25,7 +25,7 @@ async def get_current_user(token: str = Depends(get_token)):
     )
     
     except JWTError:
-        raise HTTPException(status_code=401)
+        raise IncorrectTokenFormatException
     expire: str = payload.get("exp")
     if (not expire) or (int(expire) < datetime.utcnow().timestamp()):
         raise TokenExpiredException

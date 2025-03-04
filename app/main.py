@@ -54,14 +54,6 @@ def foo(location: str,
     return hotels
  
 
-class SBoking(BaseModel):
-    room_id : int
-    date_from: date
-    date_to: date
-
-@app.post('/bookings')
-def add_boking(SBoking):
-    pass
 
 
 
