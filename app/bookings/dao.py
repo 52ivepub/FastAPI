@@ -62,6 +62,7 @@ GROUP BY rooms.quantity, booked_rooms.room_id
 
             rooms_left = await session.execute(rooms_left)
             print(rooms_left.scalar())
+            
         
 
 
